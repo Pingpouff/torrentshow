@@ -5,16 +5,18 @@ var moment = require("moment");
 
 var tvscheduler = function(options) {
   function scheduleEpisode(episode) {
-    var date = episode.airdate;
-    var airMoment = moment(episode.airstamp).add(moment.duration(6, "hours"));
+    // format show name for request
     var season = ("0" + episode.season).slice(-2);
     var number = ("0" + episode.number).slice(-2);
     var requestName = `${episode.showName} s${season}e${number}`;
-    console.log(airMoment.format("LLLL") + " : " + requestName);
-    // var date = new Date(episode.airstamp);
-    // var j = schedule.scheduleJob(airMoment, function() {
-    //   console.log("The world is going to end today.");
-    // });
+    // manage schedule air date
+    var date = episode.airdate;
+    var airMoment = moment(episode.airstamp).add(moment.duration(6, "hours"));
+    console.log(`scheduled ${requestName} on ${airMoment.format("LLLL")}`);
+    schedule.scheduleJob(airMoment.toDate(), function() {
+      zooqle.searchAndDownloadOnFreebox(requestName);
+      scheduleNextEpisode(episode.showName);
+    });
   }
 
   function scheduleNextEpisode(name) {

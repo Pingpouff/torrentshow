@@ -1,6 +1,7 @@
 var promise = require("bluebird");
 var request = promise.promisify(require("request"));
 var cheerio = (cheerio = require("cheerio"));
+var fs = require("fs");
 
 var provider = function(options) {
   var domain = "https://zooqle.com";
@@ -86,19 +87,31 @@ var provider = function(options) {
           "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
       }
     });
-    // .on('response', function (response) {
-    //     // extract filename
-    //     var filename = extractFileNameFromTorrent(response.headers['content-disposition']);
-    //     // console.log(response.statusCode);
-    //     // console.log(response.headers['content-type']);
-    //     response.pipe(fs.createWriteStream(filename));
-    // });
+  }
+
+  function downloadOnFreebox(response) {
+    // extract filename
+    var filename = extractFileNameFromTorrent(
+      response.headers["content-disposition"]
+    );
+    var filePath = `Z:/Download/TODO/${filename.replace(/ /g, "-")}`;
+    console.log(`downloading ${filename} on ${filePath}`);
+    response.pipe(fs.createWriteStream(filePath));
+  }
+
+  function searchAndDownloadOnFreebox(name) {
+    return search(`${name} 720p ettv`)
+      .then(data => data[0]) // select first result
+      .then(downloadTorrentFile)
+      .then(request => request.on("response", downloadOnFreebox));
   }
 
   return {
-    search: search,
-    downloadTorrentFile: downloadTorrentFile,
-    extractFileNameFromTorrent: extractFileNameFromTorrent
+    search,
+    downloadTorrentFile,
+    extractFileNameFromTorrent,
+    downloadOnFreebox,
+    searchAndDownloadOnFreebox
   };
 };
 
