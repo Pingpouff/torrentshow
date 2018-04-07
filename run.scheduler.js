@@ -8,6 +8,7 @@ var scheduleEpisode = function(episode) {
   var number = ("0" + episode.number).slice(-2);
   var requestName = `${episode.showName} s${season}e${number}`;
   console.log(date + " : " + requestName);
+  console.log(new Date(episode.airstamp));
 };
 var scheduleNextEpisode = function(name) {
   //   console.log(name);
