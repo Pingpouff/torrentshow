@@ -23,4 +23,4 @@ var searchAndDownloadOnFreebox = function(search) {
 };
 
 // run
-searchAndDownloadOnFreebox("homeland");
+searchAndDownloadOnFreebox("legion");
