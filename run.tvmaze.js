@@ -1,6 +1,7 @@
 var tvmaze = require("./tvmaze.api")();
 var promise = require("bluebird");
 var request = promise.promisify(require("request"));
+var zooqle = require("./zooqle.api")();
 
 var compute = function(show) {
   console.log(show.body._links.nextepisode);
@@ -8,8 +9,9 @@ var compute = function(show) {
 tvmaze
   .search("suits")
   .then(show => show.body)
-  .then(tvmaze.nextepisode)
-  .then(console.log);
+  .then(tvmaze.prevepisode)
+  .then(zooqle.searchAndDownloadOnFreebox);
+  // .then(console.log);
 
 // request({
 //   url: "https://zooqle.com/qss/suis",

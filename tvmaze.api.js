@@ -2,7 +2,7 @@
 var promise = require("bluebird");
 var request = promise.promisify(require("request"));
 
-var provider = function(options) {
+var provider = function (options) {
   var domain = "http://api.tvmaze.com";
   var singlesearch = "singlesearch";
   var shows = "shows";
@@ -25,12 +25,24 @@ var provider = function(options) {
     });
   }
 
+  function prevepisode(show) {
+    return request({
+      url: `${show._links.previousepisode.href}`,
+      json: true
+    }).then(show => show.body)
+      .then(nextShow => {
+        nextShow.showName = show.name;
+        return nextShow;
+      });
+  }
+
   return {
     search,
-    nextepisode
+    nextepisode,
+    prevepisode
   };
 };
 
-module.exports = function(options) {
+module.exports = function (options) {
   return new provider(options);
 };
