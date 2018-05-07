@@ -20,7 +20,6 @@ var tvscheduler = function(options) {
   }
 
   function scheduleNextEpisode(name) {
-    //   console.log(name);
     tvmaze
       .search(name)
       .then(show => show.body)
@@ -31,7 +30,6 @@ var tvscheduler = function(options) {
         return nextShow;
       })
       .then(scheduleEpisode);
-    // .then(console.log);
   }
 
   return {

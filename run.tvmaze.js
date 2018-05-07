@@ -7,11 +7,11 @@ var compute = function(show) {
   console.log(show.body._links.nextepisode);
 };
 tvmaze
-  .search("suits")
+  .search("homeland")
   .then(show => show.body)
   .then(tvmaze.prevepisode)
   .then(zooqle.searchAndDownloadOnFreebox);
-  // .then(console.log);
+// .then(console.log);
 
 // request({
 //   url: "https://zooqle.com/qss/suis",

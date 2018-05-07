@@ -3,7 +3,7 @@ var request = promise.promisify(require("request"));
 var cheerio = (cheerio = require("cheerio"));
 var fs = require("fs");
 
-var provider = function (options) {
+var provider = function(options) {
   var domain = "https://zooqle.com";
 
   if (options) {
@@ -12,7 +12,7 @@ var provider = function (options) {
 
   function search(searchText, callback) {
     var url = domain + "/search?q=" + searchText + "&fmt=rss";
-    console.log('searching [' + searchText + '] on zooqle.')
+    console.log("searching [" + searchText + "] on zooqle.");
     return request({
       uri: url,
       headers: {
@@ -20,14 +20,14 @@ var provider = function (options) {
           "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
       }
     })
-      .then(function (response) {
+      .then(function(response) {
         var $ = cheerio.load(response.body, {
           xmlMode: true
         });
 
         var data = [];
 
-        $("channel item").each(function (index) {
+        $("channel item").each(function(index) {
           var sizeMatch = $(this)
             .children("description")
             .text()
@@ -67,7 +67,7 @@ var provider = function (options) {
 
         return promise.resolve(data).asCallback(callback);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         return promise.reject(error).asCallback(callback);
       });
   }
@@ -95,8 +95,8 @@ var provider = function (options) {
     var filename = extractFileNameFromTorrent(
       response.headers["content-disposition"]
     );
-    // var filePath = `Z:/Download/TODO/${filename.replace(/ /g, "-")}`;
-    var filePath = `smb://freebox/disque%20dur/Download/TODO/${filename.replace(/ /g, "-")}`;
+    var filePath = `Z:/Download/TODO/${filename.replace(/ /g, "-")}`;
+    // var filePath = `smb://freebox/disque%20dur/Download/TODO/${filename.replace(/ /g, "-")}`;
     console.log(`downloading ${filename} on ${filePath}`);
     response.pipe(fs.createWriteStream(filePath));
   }
@@ -124,6 +124,6 @@ var provider = function (options) {
   };
 };
 
-module.exports = function (options) {
+module.exports = function(options) {
   return new provider(options);
 };
