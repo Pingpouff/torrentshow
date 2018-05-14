@@ -37,12 +37,14 @@ var provider = function(options) {
         return nextShow;
       });
   }
-  function episodeAiredAfter(episode, start) {
-    var airMoment = moment(episode.airstamp);
-    return airMoment.isAfter(start);
+  function episodeAiredAfter(start) {
+    return function(episode) {
+      var airMoment = moment(episode.airstamp);
+      return airMoment.isAfter(start);
+    };
   }
 
-  function ifAiredLast(days) {
+  function episodeAiredDaysAgo(days) {
     const start = moment()
       .subtract(days, "days")
       .startOf("day");

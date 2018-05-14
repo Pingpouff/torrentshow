@@ -101,6 +101,19 @@ var provider = function(options) {
     response.pipe(fs.createWriteStream(filePath));
   }
 
+  function searchAndDownloadOnFreeboxIf(conditionalFunction) {
+    return function(episode) {
+      const log = "Last " + episode.showName;
+      if (conditionalFunction(episode)) {
+        console.log("[V]" + log + " meets conditional criteria.");
+        return searchAndDownloadOnFreebox(episode);
+      } else {
+        console.log("[X]" + log + " doesn't meet conditional criteria.");
+        return episode;
+      }
+    };
+  }
+
   function searchAndDownloadOnFreebox(name) {
     if (name.season && name.number && name.showName) {
       console.log("searchText is episode");
@@ -120,7 +133,8 @@ var provider = function(options) {
     downloadTorrentFile,
     extractFileNameFromTorrent,
     downloadOnFreebox,
-    searchAndDownloadOnFreebox
+    searchAndDownloadOnFreebox,
+    searchAndDownloadOnFreeboxIf
   };
 };
 
