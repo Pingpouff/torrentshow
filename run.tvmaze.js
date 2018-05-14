@@ -10,7 +10,6 @@ const download = function(name) {
   const start = moment().subtract(1, "days");
   return tvmaze
     .search(name)
-    .then(show => show.body)
     .then(tvmaze.prevepisode)
     .then(zooqle.searchAndDownloadOnFreeboxIf(tvmaze.episodeAiredAfter(start)));
 };

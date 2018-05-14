@@ -16,14 +16,19 @@ var provider = function(options) {
     return request({
       url: `${domain}/singlesearch/shows/?q=${searchText}`,
       json: true
-    });
+    }).then(show => show.body);
   }
 
   function nextepisode(show) {
     return request({
       url: `${show._links.nextepisode.href}`,
       json: true
-    });
+    })
+      .then(show => show.body)
+      .then(nextShow => {
+        nextShow.showName = name; // TODO should be kept as show object structure
+        return nextShow;
+      });
   }
 
   function prevepisode(show) {

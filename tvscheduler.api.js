@@ -22,13 +22,7 @@ var tvscheduler = function(options) {
   function scheduleNextEpisode(name) {
     tvmaze
       .search(name)
-      .then(show => show.body)
       .then(tvmaze.nextepisode)
-      .then(show => show.body)
-      .then(nextShow => {
-        nextShow.showName = name;
-        return nextShow;
-      })
       .then(scheduleEpisode);
   }
 

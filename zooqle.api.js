@@ -106,7 +106,7 @@ var provider = function(options) {
       const log = "Last " + episode.showName;
       if (conditionalFunction(episode)) {
         console.log("[V]" + log + " meets conditional criteria.");
-        return searchAndDownloadOnFreebox(episode);
+        // return searchAndDownloadOnFreebox(episode);
       } else {
         console.log("[X]" + log + " doesn't meet conditional criteria.");
         return episode;
