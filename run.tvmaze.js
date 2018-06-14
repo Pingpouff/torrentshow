@@ -19,5 +19,7 @@ const download = function(name) {
   "game of thrones",
   "silicon valley",
   "modern familly",
-  "westworld"
+  "westworld",
+  "legion",
+  "last week tonight"
 ].forEach(download);
