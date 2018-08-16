@@ -95,8 +95,24 @@ var provider = function(options) {
     var filename = extractFileNameFromTorrent(
       response.headers["content-disposition"]
     );
-    var filePath = `Z:/Download/TODO/${filename.replace(/ /g, "-")}`;
-    // var filePath = `smb://freebox/disque%20dur/Download/TODO/${filename.replace(/ /g, "-")}`;
+    // var filePath = `Z:/Download/TODO/${filename.replace(/ /g, "-")}`;
+    var filePath = `smb://freebox/disque%20dur/Download/TODO/${filename.replace(
+      / /g,
+      "-"
+    )}`;
+    console.log(`downloading ${filename} on ${filePath}`);
+    response.pipe(fs.createWriteStream(filePath));
+  }
+
+  function download(response) {
+    // extract filename
+    var filename = extractFileNameFromTorrent(
+      response.headers["content-disposition"]
+    );
+    var filePath = `./dl/${filename.replace(
+      / /g,
+      "-"
+    )}`;
     console.log(`downloading ${filename} on ${filePath}`);
     response.pipe(fs.createWriteStream(filePath));
   }
@@ -110,6 +126,19 @@ var provider = function(options) {
       } else {
         console.log("[X]" + log + " doesn't meet conditional criteria.");
         return episode;
+      }
+    };
+  }
+
+  function execIf(conditionalFunction, execFunc, execParam) {
+    return function(execParam) {
+      const log = "Last " + execParam.showName;
+      if (conditionalFunction(execParam)) {
+        console.log("[V]" + log + " meets conditional criteria.");
+        return execFunc(execParam);
+      } else {
+        console.log("[X]" + log + " doesn't meet conditional criteria.");
+        return execParam;
       }
     };
   }
@@ -128,13 +157,27 @@ var provider = function(options) {
       .then(request => request.on("response", downloadOnFreebox));
   }
 
+  function getOne(name, res = "720p", team = "eztv") {
+    if (name.season && name.number && name.showName) {
+      console.log("searchText is episode");
+      // format show name for request
+      var season = ("0" + name.season).slice(-2);
+      var number = ("0" + name.number).slice(-2);
+      var name = `${name.showName} s${season}e${number}`;
+    }
+    return search(`${name} ${res} ${team}`).then(data => data[0]); // select first result
+  }
+
   return {
     search,
     downloadTorrentFile,
     extractFileNameFromTorrent,
     downloadOnFreebox,
     searchAndDownloadOnFreebox,
-    searchAndDownloadOnFreeboxIf
+    searchAndDownloadOnFreeboxIf,
+    execIf,
+    getOne,
+    download
   };
 };
 
