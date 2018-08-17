@@ -15,7 +15,7 @@ var transmission = promise.promisifyAll(new Transmission({
 var series = require("./shows");
 
 var download = function(name) {
-  const start = moment().subtract(10, "days");
+  const start = moment().subtract(2, "days");
   return tvmaze
     .search(name)
     .then(tvmaze.prevepisode)

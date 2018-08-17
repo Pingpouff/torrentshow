@@ -5,5 +5,6 @@ module.exports = [
   "modern familly",
   "westworld",
   "legion",
-  "last week tonight"
+  "last week tonight",
+  "suits"
 ];
