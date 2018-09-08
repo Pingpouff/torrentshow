@@ -145,7 +145,6 @@ var provider = function(options) {
 
   function searchAndDownloadOnFreebox(name) {
     if (name.season && name.number && name.showName) {
-      console.log("searchText is episode");
       // format show name for request
       var season = ("0" + name.season).slice(-2);
       var number = ("0" + name.number).slice(-2);

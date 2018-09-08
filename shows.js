@@ -1,10 +1,10 @@
 module.exports = [
-  "homeland",
-  "game of thrones",
-  "silicon valley",
-  "modern familly",
-  "westworld",
-  "legion",
-  "last week tonight",
-  "suits"
+  "Homeland",
+  "Game of thrones",
+  "Silicon valley",
+  "Modern familly",
+  "Westworld",
+  "Legion",
+  "Last week tonight",
+  "Suits"
 ];

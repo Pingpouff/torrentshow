@@ -4,7 +4,7 @@ var moment = require("moment");
 var promise = require("bluebird");
 var Transmission = require("transmission");
 var transmission = promise.promisifyAll(new Transmission({
-  host: "localhost", // default 'localhost'
+  host: "192.168.1.4", // default 'localhost'
   port: 9091, // default 9091
   username: "", // default blank
   password: "", // default blank
@@ -15,17 +15,18 @@ var transmission = promise.promisifyAll(new Transmission({
 var series = require("./shows");
 
 var download = function(name) {
-  const start = moment().subtract(2, "days");
+  const start = moment().subtract(3, "days");
   return tvmaze
     .search(name)
     .then(tvmaze.prevepisode)
     .then(
       zooqle.execIf(tvmaze.episodeAiredAfter(start), ep =>
         zooqle.getOne(ep).then(tor =>
-          transmission.addUrlAsync(tor.magnet).then(result => {
-            var id = result.id; 
-            console.log("Just added a new torrent.");
-            console.log("Torrent ID: " + id);
+          transmission.addUrlAsync(tor.magnet, {
+            "download-dir" : `/media/LaCie/Series/${name}`
+        }).then(result => {
+            var id = result.id;
+            console.log(`New ${name} Torrent added (ID:  ${id})`);
           })
         )
       )
