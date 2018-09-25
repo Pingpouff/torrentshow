@@ -6,5 +6,7 @@ module.exports = [
   "Westworld",
   "Legion",
   "Last week tonight",
-  "Suits"
+  "Suits",
+  "The big bang theory",
+  "This is us"
 ];

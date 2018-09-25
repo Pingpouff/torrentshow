@@ -64,7 +64,9 @@ var provider = function(options) {
               .attr("url")
           };
         });
-
+        if (data.length === 0) {
+          return promise.reject("No result found").asCallback(callback);
+        }
         return promise.resolve(data).asCallback(callback);
       })
       .catch(function(error) {
@@ -109,10 +111,7 @@ var provider = function(options) {
     var filename = extractFileNameFromTorrent(
       response.headers["content-disposition"]
     );
-    var filePath = `./dl/${filename.replace(
-      / /g,
-      "-"
-    )}`;
+    var filePath = `./dl/${filename.replace(/ /g, "-")}`;
     console.log(`downloading ${filename} on ${filePath}`);
     response.pipe(fs.createWriteStream(filePath));
   }
@@ -158,7 +157,6 @@ var provider = function(options) {
 
   function getOne(name, res = "720p", team = "eztv") {
     if (name.season && name.number && name.showName) {
-      console.log("searchText is episode");
       // format show name for request
       var season = ("0" + name.season).slice(-2);
       var number = ("0" + name.number).slice(-2);
