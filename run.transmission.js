@@ -16,7 +16,8 @@ var transmission = promise.promisifyAll(
   })
 );
 
-var series = require("./shows");
+var davidSeries = require("./shows");
+var auroreSeries = require("./aurore.shows");
 const days = 1;
 
 var download = function(name) {
@@ -40,4 +41,4 @@ var download = function(name) {
     );
 };
 
-series.forEach(download);
+davidSeries.concat(auroreSeries).forEach(download);
