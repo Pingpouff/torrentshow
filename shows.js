@@ -8,5 +8,6 @@ module.exports = [
   "Last week tonight",
   "Suits",
   "The big bang theory",
-  "This is us"
+  "This is us",
+  "Star Trek Discovery"
 ];

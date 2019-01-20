@@ -82,7 +82,7 @@ var provider = function(options) {
     );
   }
 
-  function downloadTorrentFile(torrentInfo) {
+  function  downloadTorrentFile(torrentInfo) {
     return request.get({
       uri: torrentInfo.torrent,
       headers: {
