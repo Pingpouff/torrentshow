@@ -78,10 +78,12 @@ var provider = function(options) {
           uri: url,
           resolveWithFullResponse: true,
           headers: {
+            Origin: "https://getcomics.info",
             "User-Agent":
               "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
           }
-        }).then(request => request.on("response", downloadFile));
+          // }).then(request => request.on("response", downloadFile));
+        }).then(downloadFile);
       })
       .catch(function(error) {
         return promise.reject(error).asCallback(callback);
@@ -127,13 +129,19 @@ var provider = function(options) {
   }
 
   function downloadFile(response) {
-    console.log("test");
+    // for (var key in response) {
+    //   var value = response[key];
+
+    //   console.log(value);
+    // }
+    console.log(response.headers["location"]);
     // extract filename
-    var filename = extractFileNameFromTorrent(
-      response.headers["content-disposition"]
-    );
-    var filePath = `./dl/${filename.replace(/ /g, "-")}`;
-    console.log(`downloading ${filename} on ${filePath}`);
+    // var filename = extractFileNameFromTorrent(
+    //   response.headers["content-disposition"]
+    // );
+    // var filePath = `./dl/${filename.replace(/ /g, "-")}`;
+    var filePath = `./dl/test.cbr`;
+    // console.log(`downloading ${filename} on ${filePath}`);
     response.pipe(fs.createWriteStream(filePath));
   }
 
