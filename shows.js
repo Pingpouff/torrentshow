@@ -11,5 +11,6 @@ module.exports = [
   "The big bang theory",
   "This is us",
   "Star Trek Discovery",
-  "One Punch Man"
+  "One Punch Man",
+  "Rick and Morty"
 ];
