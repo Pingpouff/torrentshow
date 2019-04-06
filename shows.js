@@ -10,5 +10,6 @@ module.exports = [
   "Suits",
   "The big bang theory",
   "This is us",
-  "Star Trek Discovery"
+  "Star Trek Discovery",
+  "One Punch Man"
 ];
