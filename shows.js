@@ -1,7 +1,7 @@
 module.exports = [
   "American gods",
   "Homeland",
-  "Game of thrones",
+  { name: "Game Of Thrones", res: "1080p" },
   "Silicon valley",
   "Modern family",
   "Westworld",
@@ -10,7 +10,7 @@ module.exports = [
   "Suits",
   "The big bang theory",
   "This is us",
-  "Star Trek Discovery",
+  { name: "Star Trek Discovery", res: "1080p" },
   "One Punch Man",
   "Rick and Morty"
 ];

@@ -155,7 +155,7 @@ var provider = function(options) {
       .then(request => request.on("response", downloadOnFreebox));
   }
 
-  function getOne(name, res = "720p", team = "eztv") {
+  function getOne(name, res = "720p", team = "") {
     if (name.season && name.number && name.showName) {
       // format show name for request
       var season = ("0" + name.season).slice(-2);

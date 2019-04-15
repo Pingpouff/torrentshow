@@ -16,21 +16,30 @@ var transmission = promise.promisifyAll(
   })
 );
 
+var convertToDownloadConf = function(element) {
+  var result = element;
+  if (!result.name) {
+    result = { name: result };
+  }
+  return result;
+};
+
 var davidSeries = require("./shows");
 var auroreSeries = require("./aurore.shows");
 const days = 1;
 
-var download = function(name) {
+var download = function(torrent) {
   const start = moment().subtract(days, "days");
   return tvmaze
-    .search(name)
+    .search(torrent.name)
     .then(tvmaze.prevepisode)
     .then(
       zooqle.execIf(tvmaze.episodeAiredAfter(start), ep =>
-        zooqle.getOne(ep).then(tor => {
+        zooqle.getOne(ep, torrent.res)
+        .then(tor => {
           return transmission
             .addUrlAsync(tor.magnet, {
-              "download-dir": `/media/LaCie/Series/${name}`
+              "download-dir": `/media/LaCie/Series/${name}/${name}.s0${ep.season}`
             })
             .then(result => {
               var id = result.id;
@@ -41,4 +50,4 @@ var download = function(name) {
     );
 };
 
-davidSeries.concat(auroreSeries).forEach(download);
+davidSeries.concat(auroreSeries).map(convertToDownloadConf).forEach(download);
