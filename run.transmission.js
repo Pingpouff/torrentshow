@@ -39,11 +39,11 @@ var download = function(torrent) {
         .then(tor => {
           return transmission
             .addUrlAsync(tor.magnet, {
-              "download-dir": `/media/LaCie/Series/${name}/${name}.s0${ep.season}`
+              "download-dir": `/media/LaCie/Series/${torrent.name}/${torrent.name}.s0${ep.season}`
             })
             .then(result => {
               var id = result.id;
-              console.log(`New ${name} Torrent added (ID:  ${id})`);
+              console.log(`New ${torrent.name} Torrent added (ID:  ${id})`);
             });
         })
       )
