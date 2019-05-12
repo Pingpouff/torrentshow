@@ -1,3 +1,4 @@
 **/.vscode
 **/*.torrent
 **/node_modules
+**/dl

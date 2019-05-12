@@ -129,11 +129,11 @@ var provider = function(options) {
   }
 
   function downloadFile(response) {
-    // for (var key in response) {
-    //   var value = response[key];
+    for (var key in response) {
+      var value = response[key];
 
-    //   console.log(value);
-    // }
+      console.log(value);
+    }
     console.log(response.headers["location"]);
     // extract filename
     // var filename = extractFileNameFromTorrent(
