@@ -17,5 +17,6 @@ module.exports = [
   { name: "Shingeki no Kyojin", res: "1080p", type: "manga" },
   { name: "Parasyte", res: "1080p", type: "manga" },
   { name: "Black Clover", res: "1080p", type: "manga" },
+  { name: "Boku no Hero Academia", res: "1080p", type: "manga" },
   "Rick and Morty"
 ];
