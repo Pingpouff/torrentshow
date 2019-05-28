@@ -9,6 +9,54 @@ class Horriblesubs {
     return episodes[0];
   }
 
+  async getAll(value, from, to) {
+    var data = [];
+    try {
+      const response = await horriblesubs(
+        `api.php?method=search&value=${value}`
+      );
+      // console.log(response.body);
+      // const episodesPromise = await this.extractData(response);
+
+      var $ = cheerio.load(response.body, {
+        xmlMode: true
+      });
+      var data = [];
+      $("a").each(function(index) {
+        const line = {
+          title: $(this).text(),
+          url: $(this).attr("href")
+        };
+        data[index] = line;
+      });
+      // GET season ids
+      const responses = await data
+        .map(info => info.url)
+        .map(this.getSeasonIdFromUrl);
+      const seasonIds = new Set();
+      for (const promise of responses) {
+        seasonIds.add(await promise);
+      }
+      // GET episodes
+      var episodes = new Array();
+      for (const season of seasonIds) {
+        for (let step = from; step <= to; step++) {
+          console.log(step);
+          let shows = await this.searchShows(season, step);
+          episodes = episodes.concat(shows);
+        }
+      }
+
+      /////////////
+      data = data.concat(episodes);
+    } catch (error) {
+      console.log(error);
+      // console.log(error.response.body);
+      //=> 'Internal server error ...'
+    }
+    return Promise.all(data);
+  }
+
   async search(value) {
     var data = [];
     try {

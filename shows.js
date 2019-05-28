@@ -15,5 +15,6 @@ module.exports = [
   { name: "One Punch Man", res: "1080p", type: "manga" },
   { name: "Tate no Yuusha no Nariagari", res: "1080p", type: "manga" },
   { name: "Shingeki no Kyojin", res: "1080p", type: "manga" },
+  { name: "parasyte", res: "1080p", type: "manga" },
   "Rick and Morty"
 ];
