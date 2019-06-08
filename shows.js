@@ -18,5 +18,8 @@ module.exports = [
   { name: "Parasyte", res: "1080p", type: "manga" },
   { name: "Black Clover", res: "1080p", type: "manga" },
   { name: "Boku no Hero Academia", res: "1080p", type: "manga" },
+  { name: "Violet Evergarden", res: "1080p", type: "manga" },
+  { name: "Megalo Box", res: "1080p", type: "manga" },
+  { name: "Dororo", res: "1080p", type: "manga" },
   "Rick and Morty"
 ];
