@@ -21,5 +21,6 @@ module.exports = [
   { name: "Violet Evergarden", res: "1080p", type: "manga" },
   { name: "Megalo Box", res: "1080p", type: "manga" },
   { name: "Dororo", res: "1080p", type: "manga" },
+  { name: "Mob Psycho 100", res: "1080p", type: "manga" },
   "Rick and Morty"
 ];
