@@ -13,6 +13,7 @@ var provider = function(options) {
   }
 
   function search(searchText) {
+    console.log("searching for: " + searchText);
     return request({
       url: `${domain}/singlesearch/shows/?q=${searchText}`,
       json: true
