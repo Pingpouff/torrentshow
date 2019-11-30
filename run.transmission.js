@@ -8,7 +8,7 @@ var promise = require("bluebird");
 var Transmission = require("transmission");
 var transmission = promise.promisifyAll(
   new Transmission({
-    host: "192.168.1.3", // default 'localhost'
+    host: "192.168.1.25", // default 'localhost'
     port: 9091, // default 9091
     username: "", // default blank
     password: "", // default blank
