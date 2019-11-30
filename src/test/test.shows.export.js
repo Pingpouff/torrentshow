@@ -9,5 +9,5 @@ var convertToDownloadConf = function(element) {
   return result;
 };
 
-var davidSeries = require("./shows");
+var davidSeries = require("../../config/shows");
 console.log(davidSeries.map(convertToDownloadConf));

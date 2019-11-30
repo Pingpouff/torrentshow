@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 "use strict";
-var tvmaze = require("./tvmaze.api")();
-var zooqle = require("./zooqle.api")();
+var tvmaze = require("../api/tvmaze/tvmaze.api")();
+var zooqle = require("../api/zooqle/zooqle.api")();
 var moment = require("moment");
-var series = require("./shows");
+var series = require("../../config/shows");
 
 const convertToDownloadConf = function(element) {
   var result = element;
