@@ -1,25 +1,37 @@
+#!/usr/bin/env node
+"use strict";
 var tvmaze = require("./tvmaze.api")();
 var zooqle = require("./zooqle.api")();
 var moment = require("moment");
 var series = require("./shows");
 
-var compute = function(show) {
-  console.log(show.body._links.nextepisode);
+const convertToDownloadConf = function(element) {
+  var result = element;
+  if (!result.name) {
+    result = { name: result };
+  }
+  return result;
 };
 
-const download = function(name) {
+const execIf = function(conditionalFunction, execFunc, execParam) {
+  return function(execParam) {
+    const log = execParam.showName;
+    if (conditionalFunction(execParam)) {
+      console.log("[V]" + log);
+      return execFunc(execParam);
+    } else {
+      console.log("[X]" + log);
+      return execParam;
+    }
+  };
+};
+
+const download = function(show) {
   const start = moment().subtract(1, "days");
   return tvmaze
-    .search(name)
+    .search(show.name)
     .then(tvmaze.prevepisode)
-    .then(
-      zooqle.execIf(tvmaze.episodeAiredAfter(start), ep =>
-        zooqle
-          .getOne(ep)
-          .then(zooqle.downloadTorrentFile)
-          .then(request => request.on("response", zooqle.download))
-      )
-    );
+    .then(execIf(tvmaze.episodeAiredAfter(start), console.log));
 };
 
-series.forEach(download);
+series.map(convertToDownloadConf).forEach(download);
